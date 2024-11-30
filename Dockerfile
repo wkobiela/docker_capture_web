@@ -1,6 +1,7 @@
 FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED=True
+ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /tmp
 ADD requirements.txt /tmp/
@@ -42,6 +43,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     software-properties-common && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# add contrim and non-free repositories
+RUN sed -i 's/main/main contrib non-free/' /etc/apt/sources.list
 
 # automatically accept licence of MS fonts
 RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
