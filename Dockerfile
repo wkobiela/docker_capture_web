@@ -1,5 +1,4 @@
-FROM python:3.11-slim
-MAINTAINER mokemokechicken@gmail.com
+FROM python:3.12-slim
 
 ENV PYTHONUNBUFFERED True
 
