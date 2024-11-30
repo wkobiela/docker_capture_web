@@ -1,18 +1,11 @@
 # About
 
-Webページ全体のScreenShot画像を取得するDockerコンテナです。
-Google Chromeのheadlessを使っています。
-縦長のWebページでもだいたい上手くScreenShotをとることができます。
-固定ヘッダーがあっても概ね大丈夫ですが、固定フッターはおそらく変な結果になると思います。
-
 A Docker container that captures a fullpage screenshot of any given webpage.
 Uses Google Chrome in headless mode.
 Works well even with vertically long webpages.
 Webpages with fixed headers generally work well, but fixed footers may lead to unusual results.
 
 ## Requirements
-
-以下の環境で動作を確認しています。
 
 Tested on the following environments
 
