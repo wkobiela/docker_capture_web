@@ -47,7 +47,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # add contrim and non-free repositories
 RUN echo "deb http://deb.debian.org/debian bookworm main contrib non-free" > /etc/apt/sources.list && \
     echo "deb http://security.debian.org/debian-security bookworm-security main contrib non-free" >> /etc/apt/sources.list && \
-    echo "deb http://deb.debian.org/debian bookworm-updates main contrib non-free" >> /etc/apt/sources.list
+    echo "deb http://deb.debian.org/debian bookworm-updates main contrib non-free" >> /etc/apt/sources.list && \
+    rm -f /etc/apt/sources.list.d/debian.sources
 
 # automatically accept licence of MS fonts
 RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
@@ -56,7 +57,7 @@ RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula sele
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ttf-mscorefonts-installer \
     fonts-liberation \
-    fonts-nimbus-sans && \
+    fonts-nimbus && \
     fc-cache -f -v && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
