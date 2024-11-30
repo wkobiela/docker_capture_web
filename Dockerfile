@@ -1,6 +1,5 @@
-FROM python:3.11-slim
+FROM ubuntu:22.04
 
-ENV PYTHONUNBUFFERED=True
 ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /tmp
@@ -12,6 +11,8 @@ RUN mkdir -p /tmp/screenshot
 RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     dpkg \
+    software-properties-common \
+    ca-certificates \
     fonts-liberation \
     libasound2 \
     libatk-bridge2.0-0 \
@@ -20,12 +21,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcairo2 \
     libcups2 \
     libcurl3-gnutls \
+    libcurl3-nss \
+    libcurl4 \
     libdbus-1-3 \
     libdrm2 \
     libexpat1 \
     libgbm1 \
     libglib2.0-0 \
     libgtk-3-0 \
+    libgtk-4-1 \
     libnspr4 \
     libnss3 \
     libpango-1.0-0 \
@@ -38,38 +42,37 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxfixes3 \
     libxkbcommon0 \
     libxrandr2 \
-    xdg-utils \
-    apt-transport-https \
-    software-properties-common && \
+    python3-pip \
+    xdg-utils && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-# add contrim and non-free repositories
-RUN echo "deb http://deb.debian.org/debian bookworm main contrib non-free" > /etc/apt/sources.list && \
-    echo "deb http://security.debian.org/debian-security bookworm-security main contrib non-free" >> /etc/apt/sources.list && \
-    echo "deb http://deb.debian.org/debian bookworm-updates main contrib non-free" >> /etc/apt/sources.list && \
-    rm -f /etc/apt/sources.list.d/debian.sources
 
 # automatically accept licence of MS fonts
 RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
 
 # install additional Bootstrap fonts
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    fontconfig \
     ttf-mscorefonts-installer \
     fonts-liberation \
-    fonts-urw-base35 && \
+    fonts-liberation \
+    fonts-noto \
+    fonts-roboto \
+    fonts-dejavu \
+    fonts-ubuntu && \
     fc-cache -f -v && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-    dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install && \
+    dpkg -i google-chrome-stable_current_amd64.deb && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir -r /tmp/requirements.txt
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install --no-cache-dir -r /tmp/requirements.txt
 
 WORKDIR /tmp/screenshot
 
-ENTRYPOINT ["python", "/tmp/screenshot.py"]
+ENTRYPOINT ["python3", "/tmp/screenshot.py"]
 CMD ["--help"]
