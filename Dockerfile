@@ -38,10 +38,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxkbcommon0 \
     libxrandr2 \
     xdg-utils \
-    # fonts
+    apt-transport-https \
+    software-properties-common && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# automatically accept licence of MS fonts
+RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
+
+# install additional Bootstrap fonts
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ttf-mscorefonts-installer \
     fonts-liberation \
     fonts-nimbus-sans && \
+    fc-cache -f -v && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
