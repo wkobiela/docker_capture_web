@@ -57,7 +57,7 @@ RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula sele
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ttf-mscorefonts-installer \
     fonts-liberation \
-    fonts-nimbus && \
+    fonts-urw-base35 && \
     fc-cache -f -v && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
