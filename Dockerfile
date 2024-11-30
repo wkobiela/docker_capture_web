@@ -37,7 +37,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxfixes3 \
     libxkbcommon0 \
     libxrandr2 \
-    xdg-utils && \
+    xdg-utils \
+    # fonts
+    ttf-mscorefonts-installer \
+    fonts-liberation \
+    fonts-nimbus-sans && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
