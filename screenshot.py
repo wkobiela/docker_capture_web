@@ -44,14 +44,14 @@ def args_parser():
         help="set LANG environment variable",
         dest="lang",
         type=str,
-        default="ja_JP.UTF-8",
+        default="pl_PL.UTF-8",
     )
     parser.add_argument(
         "--language",
         help="set LANGUAGE environment variable",
         dest="language",
         type=str,
-        default="ja_JP:ja",
+        default="pl_PL:pl",
     )
     parser.add_argument(
         "-v", help="set LogLevel to INFO", dest="log_info", action="store_true"
@@ -72,7 +72,7 @@ def main():
     if args.window_size:
         window_size = tuple(int(x) for x in args.window_size.split("x"))
     else:
-        window_size = (1200, 800)
+        window_size = (1920, 1080)
 
     if args.log_info:
         log_level = INFO
@@ -105,7 +105,7 @@ def capture_full_screenshot(
     :return:
     """
     options = Options()
-    options.add_argument("--headless=new")  # "new" dla Selenium 4
+    options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     if user_agent:
@@ -113,7 +113,7 @@ def capture_full_screenshot(
     if window_size:
         options.add_argument(f"--window-size={window_size[0]},{window_size[1]}")
 
-    service = Service()  # Domyślnie znajdzie ChromeDriver w PATH
+    service = Service()
     driver = webdriver.Chrome(service=service, options=options)
 
     driver.get(url)
