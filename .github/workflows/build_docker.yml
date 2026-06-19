@@ -23,7 +23,7 @@
     
         steps:
           - name: Checkout
-            uses: actions/checkout@v6
+            uses: actions/checkout@v7
     
           - name: Set BUILD_TAG
             run: |
